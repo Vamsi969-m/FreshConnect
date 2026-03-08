@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= student.name %> - Student Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/fontawesome.min.css" integrity="sha512-M5Kq4YVQrjg5c2wsZSn27Dkfm/2ALfxmun0vUE3mPiJyK53hQBHYCVAtvMYEC7ZXmYLg8DVG4tF8gD27WmDbsg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/regular.min.css" integrity="sha512-dxjqr2XIrvzsT/CydQStqWMPwVWm2Ael6w8L+SwoRbqE7bc1ZxNE3kDt0r/00iAB9rtq38eYZQcKVB/970bb4" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-wVfIllLbcnCc8d5wQwNmNNNrc4tLI3R0s3w1MHaHe7d0eB0vL2DLlSrQmwTHw/XT3pVpSGlCTZHd+0TUApIJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Base Styles */
         :root {
@@ -469,7 +472,7 @@
             <div class="student-id">ID: <%= student.uuid %></div>
         </div>
         <div class="header-actions">
-            <a href="/students" class="btn btn-secondary">
+            <a href="/student/resume_portals" class="btn btn-secondary">
                 ← Back to Dashboard
             </a>
             <a href="/students/<%= student.uuid %>/edit" class="btn btn-primary">
@@ -669,6 +672,15 @@
                         </a>
                     </div>
                 <% } %>
+
+                <% if (student.codingProfiles?.leetCode) { %>
+                    <div class="link-item">
+                        <span class="link-icon">LeetCode</span>
+                        <a href="<%= student.codingProfiles.leetCode %>" target="_blank" rel="noopener noreferrer">
+                            <%= student.codingProfiles.leetCode %>
+                        </a>
+                    </div>
+                <% } %>
                 
                 <% if (student.otherLinks?.length > 0) { %>
                     <% student.otherLinks.forEach(link => { %>
@@ -806,6 +818,9 @@
                                 <% if (student.codingProfiles?.linkedIn) { %>
                                     <li><strong>LinkedIn:</strong> <%= student.codingProfiles.linkedIn %></li>
                                 <% } %>
+                                <% if (student.codingProfiles?.leetCode) { %>
+                                    <li><strong>LeetCode:</strong> <%= student.codingProfiles.leetCode %></li>
+                                <% } %>
                             </ul>
                         </div>
                     </div>
@@ -819,7 +834,7 @@
     <!-- Actions Footer -->
     <div class="actions-footer">
         <button id="save-pdf" type="button" class="btn btn-primary">
-            💾 Save PDF
+            Save PDF
         </button>
         <a href="/students/<%= student.uuid %>/edit" class="btn btn-primary">
             ✏ Edit Student Profile
