@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Student Portal</title>
+    <style>
+        /* Modern CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .register-container {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            width: 100%;
+            max-width: 520px;
+            padding: 48px 40px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            animation: slideUp 0.6s ease;
+            z-index: 10;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .register-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .register-header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .register-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .graduation-cap {
+            font-size: 56px;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+            display: inline-block;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            font-size: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .form-control:hover {
+            border-color: #4a6fa5;
+            background: white;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4a6fa5;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(74, 111, 165, 0.1);
+        }
+
+        /* Select styling */
+        select.form-control {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%234a6fa5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            background-size: 20px;
+            padding-right: 48px;
+            cursor: pointer;
+        }
+
+        /* Password container */
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-input {
+            width: 100%;
+            padding: 14px 50px 14px 18px;
+            font-size: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .password-input:hover {
+            border-color: #4a6fa5;
+        }
+
+        .password-input:focus {
+            outline: none;
+            border-color: #4a6fa5;
+            box-shadow: 0 0 0 4px rgba(74, 111, 165, 0.1);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            background: transparent;
+            border: none;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toggle-password:hover {
+            color: #4a6fa5;
+        }
+
+        /* Password strength indicator */
+        .password-strength {
+            margin-top: 8px;
+            height: 6px;
+            border-radius: 10px;
+            background: #e0e0e0;
+            overflow: hidden;
+            display: flex;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            margin-top: 6px;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .strength-label {
+            font-weight: 600;
+        }
+
+        /* Confirm password validation */
+        .password-match {
+            font-size: 12px;
+            margin-top: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .match-success {
+            color: #2e7d32;
+        }
+
+        .match-error {
+            color: #c33;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+            background: linear-gradient(135deg, #4a6fa5 0%, #166088 100%);
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(22, 96, 136, 0.3);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn:disabled:hover::before {
+            display: none;
+        }
+
+        .register-footer {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 2px solid rgba(224, 224, 224, 0.5);
+        }
+
+        .register-footer p {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .register-footer a {
+            color: #4a6fa5;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .register-footer a:hover {
+            color: #166088;
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: rgba(255, 235, 235, 0.95);
+            color: #c33;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            border-left: 4px solid #c33;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .success-message {
+            background: rgba(232, 245, 233, 0.95);
+            color: #2e7d32;
+            padding: 14px 18px;
+            border-radius: 14px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            border-left: 4px solid #2e7d32;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #4a6fa5;
+        }
+
+        .terms-checkbox label {
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .terms-checkbox a {
+            color: #4a6fa5;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .terms-checkbox a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 32px 24px;
+                margin: 16px;
+            }
+
+            .register-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+    <!-- Add Inter font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="register-container">
+        <div class="register-header">
+            <div class="graduation-cap">🎓</div>
+            <h1>Create Account</h1>
+            <p>Join our student community today</p>
+        </div>
+
+        <!-- Display flash messages if any -->
+        <% if (locals.error) { %>
+            <div class="error-message">
+                <strong><i class="fas fa-exclamation-circle"></i> Error:</strong> <%= error %>
+            </div>
+        <% } %>
+
+        <% if (locals.success) { %>
+            <div class="success-message">
+                <strong><i class="fas fa-check-circle"></i> Success:</strong> <%= success %>
+            </div>
+        <% } %>
+
+        <form action="/register" method="POST" id="registerForm">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="name">
+                    <i class="fas fa-user" style="color: #4a6fa5; margin-right: 6px;"></i>
+                    Full Name
+                </label>
+                <input 
+                    type="text" 
+                    name="name" 
+                    id="name" 
+                    class="form-control" 
+                    placeholder="Enter your full name" 
+                    value="<%= locals.name ? name : '' %>"
+                    required
+                >
+            </div>
+
+            <!-- Email Address -->
+            <div class="form-group">
+                <label for="email">
+                    <i class="fas fa-envelope" style="color: #4a6fa5; margin-right: 6px;"></i>
+                    Email Address
+                </label>
+                <input 
+                    type="email" 
+                    name="email" 
+                    id="email" 
+                    class="form-control" 
+                    placeholder="Enter you Email address" 
+                    value="<%= locals.email ? email : '' %>"
+                    required
+                >
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock" style="color: #4a6fa5; margin-right: 6px;"></i>
+                    Password
+                </label>
+                <div class="password-container">
+                    <input 
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        class="password-input" 
+                        placeholder="Create a password"
+                        required
+                    >
+                    <button type="button" class="toggle-password" id="togglePassword" aria-label="Show password">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+                
+                <!-- Password Strength Indicator -->
+                <div class="password-strength">
+                    <div class="strength-bar" id="strengthBar"></div>
+                </div>
+                <div class="strength-text">
+                    <span class="strength-label" id="strengthLabel">Password strength:</span>
+                    <span id="strengthValue">Not entered</span>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group">
+                <label for="confirmPassword">
+                    <i class="fas fa-lock" style="color: #4a6fa5; margin-right: 6px;"></i>
+                    Confirm Password
+                </label>
+                <div class="password-container">
+                    <input 
+                        type="password" 
+                        name="confirmPassword" 
+                        id="confirmPassword" 
+                        class="password-input" 
+                        placeholder="Confirm your password"
+                        required
+                    >
+                    <button type="button" class="toggle-password" id="toggleConfirmPassword" aria-label="Show password">
+                        <i class="far fa-eye"></i>
+                    </button>
+                </div>
+                
+                <!-- Password Match Indicator -->
+                <div class="password-match" id="passwordMatch">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="matchMessage">Please confirm your password</span>
+                </div>
+            </div>
+
+            <!-- Role Selection -->
+            <div class="form-group">
+                <label for="role">
+                    <i class="fas fa-user-tag" style="color: #4a6fa5; margin-right: 6px;"></i>
+                    Select Your Role
+                </label>
+                <select name="role" id="role" class="form-control" required>
+                    <option value="" disabled selected>— Choose your role —</option>
+                    <option value="student"> Student</option>
+                    <option value="admin"> Admin / Faculty</option>
+                </select>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="terms-checkbox">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">
+                    I agree to the <a href="/terms">Terms of Service</a> and 
+                    <a href="/privacy">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn" id="submitBtn">
+                <i class="fas fa-user-plus" style="margin-right: 8px;"></i>
+                Create Account →
+            </button>
+        </form>
+
+        <div class="register-footer">
+            <p>Already have an account?</p>
+            <a href="/login">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign in here →
+            </a>
+            <p style="font-size: 12px; margin-top: 20px; color: #999;">
+                <i class="fas fa-shield-alt"></i> Your information is secure and encrypted
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Password visibility toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            // Toggle for password field
+            const togglePassword = document.querySelector('#togglePassword');
+            const passwordInput = document.querySelector('#password');
+            
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                    
+                    this.setAttribute('aria-label', type === 'password' ? 'Show password' : 'Hide password');
+                });
+            }
+
+            // Toggle for confirm password field
+            const toggleConfirmPassword = document.querySelector('#toggleConfirmPassword');
+            const confirmPasswordInput = document.querySelector('#confirmPassword');
+            
+            if (toggleConfirmPassword && confirmPasswordInput) {
+                toggleConfirmPassword.addEventListener('click', function() {
+                    const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    confirmPasswordInput.setAttribute('type', type);
+                    
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('fa-eye');
+                    icon.classList.toggle('fa-eye-slash');
+                    
+                    this.setAttribute('aria-label', type === 'password' ? 'Show password' : 'Hide password');
+                });
+            }
+
+            // Password strength checker
+            const password = document.getElementById('password');
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthLabel = document.getElementById('strengthLabel');
+            const strengthValue = document.getElementById('strengthValue');
+
+            function checkPasswordStrength(password) {
+                let strength = 0;
+                
+                if (password.length >= 8) strength += 1;
+                if (password.match(/[a-z]+/)) strength += 1;
+                if (password.match(/[A-Z]+/)) strength += 1;
+                if (password.match(/[0-9]+/)) strength += 1;
+                if (password.match(/[$@#&!]+/)) strength += 1;
+                
+                return strength;
+            }
+
+            if (password) {
+                password.addEventListener('input', function() {
+                    const strength = checkPasswordStrength(this.value);
+                    let width = 0;
+                    let color = '';
+                    let text = '';
+                    
+                    if (this.value.length === 0) {
+                        width = 0;
+                        color = '#e0e0e0';
+                        text = 'Not entered';
+                    } else if (strength <= 2) {
+                        width = 20;
+                        color = '#c33';
+                        text = 'Weak';
+                    } else if (strength === 3) {
+                        width = 50;
+                        color = '#ff9800';
+                        text = 'Fair';
+                    } else if (strength === 4) {
+                        width = 75;
+                        color = '#2196f3';
+                        text = 'Good';
+                    } else if (strength >= 5) {
+                        width = 100;
+                        color = '#2e7d32';
+                        text = 'Strong';
+                    }
+                    
+                    strengthBar.style.width = width + '%';
+                    strengthBar.style.background = color;
+                    strengthValue.textContent = text;
+                    strengthValue.style.color = color;
+                });
+            }
+
+            // Confirm password validation
+            const confirmPassword = document.getElementById('confirmPassword');
+            const matchMessage = document.getElementById('matchMessage');
+            const passwordMatch = document.getElementById('passwordMatch');
+
+            function validatePasswordMatch() {
+                if (confirmPassword.value.length === 0) {
+                    matchMessage.textContent = 'Please confirm your password';
+                    matchMessage.style.color = '#666';
+                    passwordMatch.className = 'password-match';
+                    return false;
+                } else if (password.value === confirmPassword.value) {
+                    matchMessage.textContent = 'Passwords match ✓';
+                    matchMessage.style.color = '#2e7d32';
+                    passwordMatch.className = 'password-match match-success';
+                    return true;
+                } else {
+                    matchMessage.textContent = 'Passwords do not match ✗';
+                    matchMessage.style.color = '#c33';
+                    passwordMatch.className = 'password-match match-error';
+                    return false;
+                }
+            }
+
+            if (confirmPassword && password) {
+                confirmPassword.addEventListener('input', validatePasswordMatch);
+                password.addEventListener('input', function() {
+                    if (confirmPassword.value.length > 0) {
+                        validatePasswordMatch();
+                    }
+                });
+            }
+
+            // Form validation before submit
+            const form = document.getElementById('registerForm');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    if (!validatePasswordMatch()) {
+                        e.preventDefault();
+                        alert('Passwords do not match! Please check again.');
+                    }
+                    
+                    const termsCheckbox = document.getElementById('terms');
+                    if (!termsCheckbox.checked) {
+                        e.preventDefault();
+                        alert('Please agree to the Terms of Service and Privacy Policy.');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
