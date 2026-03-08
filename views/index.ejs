@@ -424,12 +424,12 @@
         }
         
         .btn-view {
-            background-color: var(--light-color);
-            color: var(--primary-color);
+            background-color: var(--success-color);
+            color: white;
         }
         
         .btn-view:hover {
-            background-color: #d5dbdb;
+            background-color: #229954;
         }
         
         .btn-edit {
@@ -539,9 +539,16 @@
             <h1>Freshers Recruitment Portal</h1>
             <p class="subtitle">Manage and review candidate profiles for recruitment</p>
         </div>
-        <a href="/students/new" class="btn-primary">
-            Upload Student Records
-        </a>
+        <div style="display: flex; gap: 10px; align-items: center;">
+            <a href="/students/new" class="btn-primary">
+                Upload Student Records
+            </a>
+            <form action="/logout" method="POST" style="margin: 0;">
+                <button type="submit" class="btn-primary" style="background-color: var(--accent-color);">
+                    <i class="fa-solid fa-sign-out-alt"></i> Logout
+                </button>
+            </form>
+        </div>
     </header>
     
     <!-- Search and Filter Section -->
@@ -660,11 +667,11 @@
     <div class="card-container" id="studentCards">
     <% students.forEach(student => { %>
         <div class="card" 
-             data-name="<%= (student.name || '').toLowerCase() %>" 
-             data-college="<%= student.college || '' %>" 
-             data-course="<%= student.course || '' %>"
-             data-cgpa="<%= typeof student.cgpa !== 'undefined' && student.cgpa !== null ? student.cgpa : '' %>"
-             data-skills="<%= (student.skills ? Object.values(student.skills).flat().join(',') : '').toLowerCase() %>">
+        data-name="<%= (student.name || '').toLowerCase() %>" 
+        data-college="<%= student.college || '' %>" 
+        data-course="<%= student.course || '' %>"
+        data-cgpa="<%= typeof student.cgpa !== 'undefined' && student.cgpa !== null ? student.cgpa : '' %>"
+        data-skills="<%= (student.skills ? Object.values(student.skills).flat().join(',') : '').toLowerCase() %>">
             <div class="card-header">
                 <h3><%= student.name || 'Unnamed' %></h3>
                 <div class="card-id">ID: <%= (student.uuid || '').substring(0, 8) %></div>
